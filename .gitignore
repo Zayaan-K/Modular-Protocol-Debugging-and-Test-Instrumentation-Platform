@@ -1,0 +1,103 @@
+# ==================================================
+# KiCad
+# ==================================================
+
+# Temporary lock files
+~$*.kicad_sch
+~$*.kicad_pcb
+~$*.kicad_pro
+*.lck
+
+# Automatic saves and backups
+_autosave-*
+*-backups/
+backups/
+*.kicad_sch-bak
+*.kicad_pcb-bak
+*.kicad_wks-bak
+*.sch-bak
+*.brd-bak
+*.bak
+*.bck
+
+# ==================================================
+# Generated PCB manufacturing files
+# ==================================================
+
+# Temporary manufacturing output
+**/manufacturing/generated/
+
+# Gerbers
+*.gbr
+*.gbrjob
+*.gm1
+*.gtl
+*.gbl
+*.gts
+*.gbs
+*.gto
+*.gbo
+
+# Drill and position files
+*.drl
+*.xln
+*.pos
+*.rpt
+*-pos.csv
+*-positions.csv
+
+# Generated BOM files
+*-bom.csv
+*-bom.xlsx
+*-bom.html
+
+# ==================================================
+# Circuit simulation
+# ==================================================
+
+*.raw
+*.log
+*.out
+*.cir~
+simulation/results/
+
+# ==================================================
+# Firmware build outputs
+# ==================================================
+
+build/
+out/
+dist/
+*.elf
+*.hex
+*.bin
+*.map
+*.o
+*.obj
+*.d
+
+# ==================================================
+# Editor settings
+# ==================================================
+
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ==================================================
+# Operating-system files
+# ==================================================
+
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ==================================================
+# Local configuration and secrets
+# ==================================================
+
+.env
+.env.*
+!.env.example
