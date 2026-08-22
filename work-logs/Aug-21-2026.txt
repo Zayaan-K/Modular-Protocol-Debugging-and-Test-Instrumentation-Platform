@@ -1,0 +1,44 @@
+1. Research
+
+Pin numbering for exact male and female USB connector footprints
+USB signals: VBUS, D-, D+, GND, and connector shield
+The difference between signal ground and connector shield
+Why USB 2.0 high-speed routing needs a short, direct 90 Ω differential path
+Low-capacitance USB 2.0 ESD-protection requirements
+Why oscilloscope test points and long branches create signal stubs
+
+2. Build the signal path
+
+Host connector → optional 0 Ω links → Device connector
+                        ↓
+               measurement test points
+
+Connections:
+
+VBUS_HOST to VBUS_DEVICE
+USB_D-_HOST to USB_D-_DEVICE
+USB_D+_HOST to USB_D+_DEVICE
+GND_HOST to GND_DEVICE
+Connector shields according to your documented shield strategy
+
+Separate test points for:
+
+VBUS
+D−
+D+
+Ground
+
+D+/D− test points directly on the main nets. Avoid drawing a separate breakout branch.
+
+3. Add passive-board provisions
+
+Add schematic positions for:
+
+One low-capacitance USB ESD-protection device
+A resettable fuse or fuse placeholder on VBUS
+A VBUS current-measurement bypass location
+0 Ω links on VBUS, D+, and D−
+Optional shield-to-ground connection network
+Decoupling near any protection or powered circuitry
+
+Use DNP—do not populate—for uncertain or future components. 
