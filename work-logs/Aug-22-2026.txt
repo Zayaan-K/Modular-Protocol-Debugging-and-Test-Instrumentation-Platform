@@ -1,0 +1,85 @@
+finalize USB 2.0 design rules and begin the pass-through schematic
+
+1. Record answers to:
+
+Why D+ and D− are routed as a 90 Ω differential pair
+Why they require a continuous ground reference
+How branches, large test pads and vias create impedance discontinuities
+Why ESD-device capacitance loads the data lines
+Why the ESD device belongs close to the exposed connector
+
+Write a short usb2-design-notes.md containing these preliminary rules:
+
+Target 90 Ω differential impedance; final geometry determined from the fabricator’s stack-up.
+Keep D+/D− short, parallel and on one layer where practical.
+Maintain constant width, spacing and ground reference.
+Avoid routing over plane gaps.
+Avoid unnecessary vias and branches.
+Put test pads directly in the route, not at the end of long traces.
+Use a two-channel ESD device explicitly rated for USB 2.0 High-Speed.
+Route through or immediately beside the ESD device with a short ground connection.
+
+Do not attempt to calculate final trace dimensions, need to choose a PCB stack-up first.
+
+2. Select the physical USB connection 
+
+Computer/host → USB Type-A male → board → USB Type-A female → peripheral
+
+Select exact connector part numbers that:
+
+Are currently obtainable
+Have datasheets with clear pin numbering
+Include shield/mounting contacts
+Have available or easily verifiable KiCad footprints
+Use through-hole mounting tabs if possible for mechanical strength
+
+Record the manufacturer part number, DigiKey/Mouser number and datasheet link.
+
+3. Build the core schematic
+
+Create the four continuous paths:
+
+VBUS_HOST → VBUS_DEVICE
+D-_HOST   → D-_DEVICE
+D+_HOST   → D+_DEVICE
+GND_HOST  → GND_DEVICE
+
+Add:
+
+One test point each for VBUS, D−, D+ and GND
+One 0 Ω series-link position on VBUS, D− and D+
+A placeholder for a two-channel USB 2.0 ESD array
+Distinct connector-shield pins
+Clear host-side and device-side net labels
+
+Place the ESD array near the device-facing connector in the schematic structure, because that is the connector most likely to be touched during normal use.
+
+For this passive revision, do not add:
+
+Data-line MOSFET switches
+Fault resistors or capacitors
+External VBUS injection
+A microcontroller or FPGA
+Protocol decoding
+USB-C circuitry
+
+4. Verfiy
+
+Check every connector pin against its datasheet and run KiCad ERC.
+
+Manually confirm:
+
+Pin 1 is VBUS
+Pin 2 is D−
+Pin 3 is D+
+Pin 4 is GND
+Shields are not accidentally treated as signal pins
+D+ never crosses to D−
+No power-output symbol drives VBUS
+Every optional placeholder is clearly marked DNP where appropriate
+Every ERC warning is fixed or documented
+Why this matters
+
+Success test
+
+The session is complete when seleceted, any pin on the host connector and trace one clearly labelled path to the correct pin on the device connector, with no unexplained ERC errors.
