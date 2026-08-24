@@ -1,11 +1,53 @@
 1. Research
 
 Pin numbering for exact male and female USB connector footprints
-USB signals: VBUS, D-, D+, GND, and connector shield
-The difference between signal ground and connector shield
-Why USB 2.0 high-speed routing needs a short, direct 90 Ω differential path
-Low-capacitance USB 2.0 ESD-protection requirements
-Why oscilloscope test points and long branches create signal stubs
+
+
+-Number Signal Name Typical Wiring Assignment (LEFT TO RIGHT ON CONNECTOR)
+
+    Contact Number    Signal Name     Designation
+	1 	   	VBUS 		Red
+	2 	   	D- 		White
+	3 	   	D+ 		Green
+	4 	   	GND 		Black
+	Shell      	Shield 		Drain Wire
+
+Source: USB_20.pdf @ 6.5.2 USB Connector Termination Data
+
+
+-The difference between signal ground and connector shield
+
+GND is for electrical power return Shield is a protection system for ESD and EMI control
+
+Source: USB_20.pdf @ 6.8 USB Grounding
+
+-What differential impedance USB 2.0 high-speed routing needs and how should it be
+
+The D+ and D- circuit board traces which run between a transceiver and its associated
+connector should also have a nominal differential impedance of 90 Ω. It should beshort and direct reduces loss, propagation delay, and impedance discontinuities caused by vias, bends, and branches.
+
+Source: USB_20.pdf @7.1.1.3 High-speed (480 Mb/s) Driver Characteristics
+ 
+-Low-capacitance USB 2.0 ESD-protection requirements
+
+Working Voltage: The reverse working voltage (VRWM) of the protection diode is recommended to be
+greater than or equal to the operating voltage of the system being protected
+
+The clamping voltage is recommended to be below the absolute maximum rating of the downstream component.
+
+A low-capacitance ESD diode with less than 4pF is recommended to support the signal speed. (For support upto 480MB/s)
+
+A minimum IEC 61000-4-2 rating of 8kV for contact and 15kV for air-gap is recommended
+
+Source: TI ESD and Surge Protection for USB Interfaces @ 3.2 ESD Protection Requirements
+
+
+-Why oscilloscope test points and long branches create signal stubs
+
+USB 2.0 high-speed traces behave as transmission lines, so a branched oscilloscope test point becomes an unterminated signal stub. When a signal reaches the branch, some energy travels down it, reflects from its open or mismatched end, and returns to the main USB path. This reflection can cause ringing, overshoot, and distorted signal edges. Longer branches create more delayed reflections, so test points should be placed directly on the main D+ and D− path with minimal branch length.
+
+Source: SIGNAL AND POWERINTEGRITY–SIMPLIFIED SECOND EDITION @ Chapter 8: Transmission Lines and Reflections
+
 
 2. Build the signal path
 
