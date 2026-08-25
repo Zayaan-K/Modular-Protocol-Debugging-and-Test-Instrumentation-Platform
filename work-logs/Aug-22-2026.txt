@@ -2,13 +2,35 @@ finalize USB 2.0 design rules and begin the pass-through schematic
 
 1. Record answers to:
 
-Why D+ and D− are routed as a 90 Ω differential pair
-Why they require a continuous ground reference
-How branches, large test pads and vias create impedance discontinuities
-Why ESD-device capacitance loads the data lines
-Why the ESD device belongs close to the exposed connector
+-Why D+ & D- require a continuous ground reference
 
-Write a short usb2-design-notes.md containing these preliminary rules:
+
+Route the high-speed USB signals on the plane closest to the ground plane whenever possible. Avoid running signal traces across a split in the
+ground or power plane. Minimizing the number of signal vias reduces EMI by reducing inductance at high frequencies. the ground plane provides the high-frequency return current with a short, low-impedance path. A gap or split forces that current to detour, increasing loop area, EMI, noise and impedance variation.
+
+Source: TI AM335x and AM43xx USB Layout Guidelines @ Section 2.7: Image Planes
+
+-How branches, large test pads and vias create impedance discontinuities
+
+These physical structures change the trace geometry:
+
+A branch becomes an unterminated transmission-line stub that reflects part of the signal. A large test pad adds conductor area and therefore additional capacitance to the ground plane. A via adds inductance, capacitance and possibly an unused via stub.
+
+Source: TI High-Speed Interface Layout Guidelines @ Section 3.6 Via Discontinuity Mitigation &  Section 3.8 Increase Via Anti-Pad Diameter
+
+-Why ESD-device capacitance loads the data lines
+
+An ESD diode is electrically connected from each data line toward ground. Even when it is not conducting an ESD pulse, its semiconductor junction has parasitic capacitance. That capacitance draws more high-frequency current as frequency. It can act as a frequency dependant shunt load
+
+Source: Picking ESD Diodes for Ultra High-Speed Data Lines @ Section 4 Layout Considerations
+
+-Why the ESD device belongs close to the exposed connector
+
+The ESD device must intercept the discharge immediately after it enters through the connector. Placing it close minimizes the inductance between the connector.
+
+Source: Picking ESD Diodes for Ultra High-Speed Data Lines @ Section 4 Layout Considerations
+
+Write a short usb2-requirements.md containing these preliminary rules:
 
 Target 90 Ω differential impedance; final geometry determined from the fabricator’s stack-up.
 Keep D+/D− short, parallel and on one layer where practical.
@@ -21,65 +43,4 @@ Route through or immediately beside the ESD device with a short ground connectio
 
 Do not attempt to calculate final trace dimensions, need to choose a PCB stack-up first.
 
-2. Select the physical USB connection 
 
-Computer/host → USB Type-A male → board → USB Type-A female → peripheral
-
-Select exact connector part numbers that:
-
-Are currently obtainable
-Have datasheets with clear pin numbering
-Include shield/mounting contacts
-Have available or easily verifiable KiCad footprints
-Use through-hole mounting tabs if possible for mechanical strength
-
-Record the manufacturer part number, DigiKey/Mouser number and datasheet link.
-
-3. Build the core schematic
-
-Create the four continuous paths:
-
-VBUS_HOST → VBUS_DEVICE
-D-_HOST   → D-_DEVICE
-D+_HOST   → D+_DEVICE
-GND_HOST  → GND_DEVICE
-
-Add:
-
-One test point each for VBUS, D−, D+ and GND
-One 0 Ω series-link position on VBUS, D− and D+
-A placeholder for a two-channel USB 2.0 ESD array
-Distinct connector-shield pins
-Clear host-side and device-side net labels
-
-Place the ESD array near the device-facing connector in the schematic structure, because that is the connector most likely to be touched during normal use.
-
-For this passive revision, do not add:
-
-Data-line MOSFET switches
-Fault resistors or capacitors
-External VBUS injection
-A microcontroller or FPGA
-Protocol decoding
-USB-C circuitry
-
-4. Verfiy
-
-Check every connector pin against its datasheet and run KiCad ERC.
-
-Manually confirm:
-
-Pin 1 is VBUS
-Pin 2 is D−
-Pin 3 is D+
-Pin 4 is GND
-Shields are not accidentally treated as signal pins
-D+ never crosses to D−
-No power-output symbol drives VBUS
-Every optional placeholder is clearly marked DNP where appropriate
-Every ERC warning is fixed or documented
-Why this matters
-
-Success test
-
-The session is complete when seleceted, any pin on the host connector and trace one clearly labelled path to the correct pin on the device connector, with no unexplained ERC errors.
