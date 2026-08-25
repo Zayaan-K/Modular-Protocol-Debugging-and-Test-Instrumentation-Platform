@@ -65,22 +65,23 @@ Connector shields according to your documented shield strategy
 
 Separate test points for:
 
-VBUS
+V_USB
 D−
 D+
 Ground
-
 D+/D− test points directly on the main nets. Avoid drawing a separate breakout branch.
 
 3. Add passive-board provisions
 
 Add schematic positions for:
 
-One low-capacitance USB ESD-protection device
-A resettable fuse or fuse placeholder on VBUS
+One low-capacitance USB ESD-protection device: DNP
+A resettable fuse or fuse placeholder on VBUS: DNP
 A VBUS current-measurement bypass location
 0 Ω links on VBUS, D+, and D−
-Optional shield-to-ground connection network
-Decoupling near any protection or powered circuitry
+Optional shield-to-ground connection network DNP 
+Decoupling near any protection or powered circuitry DNP
+
+Lack of info for implementing Protective Measures Currently 
 
 Use DNP—do not populate—for uncertain or future components. 
