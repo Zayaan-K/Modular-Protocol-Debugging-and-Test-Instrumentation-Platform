@@ -30,7 +30,7 @@ The ESD device must intercept the discharge immediately after it enters through 
 
 Source: Picking ESD Diodes for Ultra High-Speed Data Lines @ Section 4 Layout Considerations
 
-Write a short usb2-requirements.md containing these preliminary rules:
+Update usb2-requirements.md containing these preliminary rules:
 
 Target 90 Ω differential impedance; final geometry determined from the fabricator’s stack-up.
 Keep D+/D− short, parallel and on one layer where practical.

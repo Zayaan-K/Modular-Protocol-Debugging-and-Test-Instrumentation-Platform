@@ -5,8 +5,8 @@
 | Document field | Value |
 |---|---|
 | Document ID | PI-USB2-REQ-001 |
-| Revision | Draft 0.2 |
-| Date | 20 August 2026 |
+| Revision | Draft 0.3 |
+| Date | 24 August 2026 |
 | Applies to | USB 2.0 and USB-C operating in USB 2.0 mode |
 
 ## 1. Scope and limits
@@ -28,6 +28,11 @@
 | SIG-006 | Must | In normal mode, the module shall pass low-speed and full-speed enumeration and transfers. | Compatibility test |
 | SIG-007 | Should | The passive direct path should pass representative USB high-speed enumeration and sustained transfers. | Host/device/cable matrix |
 | SIG-008 | Must | High-speed-compatible operation shall not be described as formal USB compliance certification. | Documentation review |
+| SIG-009 | Must | D+ and D- shall be kept short, routed in parallel and kept on the same PCB layer where practical. | Layout review |
+| SIG-010 | Must | The differential pair shall maintain consistent trace width, pair spacing and ground reference, except where unavoidable at component pads. | Layout review |
+| SIG-011 | Must | D+ and D- shall not be routed across gaps, splits or edges in the reference plane. | Layout review |
+| SIG-012 | Must | Unnecessary vias, branches and layer changes shall be avoided on D+ and D-. | Layout review |
+| SIG-013 | Must | Final D+/D- trace width and spacing shall not be selected until the PCB fabricator's stack-up, dielectric properties and copper thickness are known. | Stack-up and fabrication review |
 
 ## 3. Probe-access requirements
 
@@ -38,6 +43,7 @@
 | PRB-003 | Should | D+/D- should have compact paired pads suitable for differential probing. | Usability test |
 | PRB-004 | Should | Probe attachment and test-point stubs should be characterized by repeating USB transfer tests with the intended probes attached. | Probe-impact test |
 | PRB-005 | Should | A logic-analyzer output shall use a buffered or otherwise validated path and shall not directly overload D+/D-. | Electrical review and transfer test |
+| PRB-006 | Must | D+/D- test pads shall be placed directly within the routed pair or immediately adjacent to it and shall not be connected through long branched traces. | Layout review |
 
 ## 4. USB power measurement and routing
 
@@ -92,6 +98,9 @@
 | ISO-002 | Should | Shield-to-circuit-ground treatment should support documented direct, RC or disconnected configurations where safe. | Continuity and impedance test |
 | ISO-003 | Could | A selectable USB isolator path may be provided for low/full speed only unless explicitly rated and validated at high speed. | Part review and speed test |
 | ISO-004 | Must | The non-isolated nature of ordinary oscilloscope ground connections shall be documented. | Documentation review |
+| ISO-005 | Must | D+ and D- shall use a two-channel ESD-protection device explicitly rated as suitable for USB 2.0 High-Speed operation. | Component review |
+| ISO-006 | Must | The ESD device shall be placed immediately beside the exposed connector, with D+ and D- routed through or immediately beside it. | Layout review |
+| ISO-007 | Must | The ESD device shall use a short, low-inductance connection to the designated ground reference, without a long ground trace. | Layout review |
 
 ## 8. Cable and known-target diagnostics
 
@@ -126,4 +135,3 @@
 - Brownout-generation method
 - Whether cable diagnostics require a separate adapter
 - PCB layer count and fabrication stack-up
-
