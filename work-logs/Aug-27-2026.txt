@@ -1,0 +1,117 @@
+1. Finalize the protection strategy — 45–60 minutes
+
+Research and select a two-channel ESD array for D+ and D−. Its datasheet should explicitly state:
+
+1. Finalize the protection strategy
+
+Research and select a two-channel ESD array for USB D+ and D−.
+
+Chosen part: Texas Instruments TPD2E2U06QDBZRQ1
+
+Package: SOT-23-3 (DBZ)
+
+DigiKey listing: https://www.digikey.ca/en/products/detail/texas-instruments/TPD2E2U06QDBZRQ1/5056067
+
+Datasheet: https://www.ti.com/lit/ds/symlink/tpd2e2u06-q1.pdf
+
+USB 2.0 High-Speed compatibility: Pass
+The datasheet identifies USB 2.0 as a supported interface and states that the device supports data rates above 1.5 Gb/s.
+
+Two matched channels: Pass
+The device has two identical protection channels. Typical channel-capacitance variation is 0.03 pF, with a maximum variation of 0.1 pF.
+
+Working voltage compatible with USB data levels: Pass
+The reverse stand-off voltage is 5.5 V.
+
+Low line capacitance, preferably around 1.5 pF or less: Pass
+Line capacitance is 1.5 pF typical and 1.9 pF maximum per channel.
+
+IEC 61000-4-2 system-level rating: Pass
+The component is beyond the standard Level 4 test voltages.
+
+At least ±8 kV contact and ±15 kV air-gap protection: Pass
+Contact discharge: ±25 kV
+Air-gap discharge: ±30 kV
+
+Package that can realistically be hand-soldered: Pass
+
+Flow-through or symmetric pin arrangement: Pass
+The device has two identical and closely matched protection channels. 
+
+Selection result:
+The TPD2E2U06QDBZRQ1 satisfies the requirements for protecting the USB 2.0 D+ and D− lines.
+
+
+2. Add the ESD array
+
+USB female connector → ESD protection → 0 Ω links → USB male connector
+
+Keep these schematic intentions clear:
+
+One protected channel for D+
+One protected channel for D−
+Very short ESD ground connection
+No crossed polarity or channel names
+No separate decoupling capacitor unless the selected part’s datasheet explicitly requires one
+
+A normal passive TVS/ESD array generally does not require a decoupling capacitor.
+
+3. Resolve the data-line test points 
+
+Avoid ordinary large through-hole test points on D+ and D−. They introduce extra pad capacitance and an impedance discontinuity even when there is no long branch.
+
+Use one of these approaches:
+
+Small SMD probe pads placed directly in line and symmetrically on both signals, or
+Clearly marked optional/DNP probing footprints, or
+Omit D+/D− test points and retain only VBUS and ground test points
+
+Keep accessible test points for:
+
+VBUS
+Ground
+Current-measurement nodes, if already included
+
+4. Complete the schematic review
+
+Verify each block:
+
+USB male connector pinout
+USB female connector pinout
+D+ connects only to D+
+D− connects only to D−
+VBUS passes through the intended fuse/link/current-measurement path
+USB ground remains continuous
+The module and externally powered base board share ground
+Base-board power is not accidentally tied to USB VBUS
+Connector shields follow the documented shield strategy
+ESD channels and ground match the component datasheet
+Optional parts are marked DNP
+J3 pin names agree with the base-board interface requirements
+
+Do not need logic-rail decoupling yet if the module contains no powered ICs. Add decoupling later beside each powered active component after its supply voltage is chosen.
+
+5. Run ERC and prepare for layout
+
+Run KiCad’s Electrical Rules Checker and resolve or document every warning. Then assign verified footprints for:
+
+Both USB connectors
+ESD array
+0 Ω links
+VBUS fuse or protection placeholder
+VBUS and ground test points
+Base-board connector
+Mounting holes, if already defined
+
+Open the footprint viewer and confirm that the USB connector pad numbering matches its datasheet—not merely the schematic symbol.
+
+Success test
+
+Complete when:
+
+The ESD component has a verified datasheet and footprint.
+Every connector pad number has been manually checked.
+D+/D− have no large or asymmetric probing branches.
+USB VBUS and base-board power cannot unintentionally power each other.
+ERC reports no unexplained errors.
+You can trace all four USB conductors from one connector to the other.
