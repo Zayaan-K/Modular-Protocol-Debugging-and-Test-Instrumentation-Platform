@@ -1,7 +1,3 @@
-1. Finalize the protection strategy — 45–60 minutes
-
-Research and select a two-channel ESD array for D+ and D−. Its datasheet should explicitly state:
-
 1. Finalize the protection strategy
 
 Research and select a two-channel ESD array for USB D+ and D−.
