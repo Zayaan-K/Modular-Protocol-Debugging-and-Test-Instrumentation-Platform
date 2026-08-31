@@ -1,0 +1,111 @@
+1. Choose the fabrication stack-up
+
+Select the PCB manufacturer you are most likely to use and examine its documented stack-ups and controlled-impedance capabilities.
+
+USB 2.0 PCB Stack-up and Differential-Pair Geometry
+
+Manufacturer:
+JLCPCB
+
+Board construction:
+- Board type: Rigid FR-4
+- Layer count: 4
+- Nominal board thickness: 1.6 mm
+- Selected stack-up: JLC04161H-3313A
+- Finished stack-up thickness: 1.58 mm ±10%
+- Outer copper weight: 1 oz
+- Inner copper weight: 0.5 oz
+
+Layer usage:
+- L1: Components and USB D+/D− routing
+- L2: Continuous ground reference plane
+- L3: Power and low-speed signals
+- L4: Low-speed signals and optional ground fill
+
+USB differential-pair requirements:
+- Target differential impedance: 90 Ω
+- Routing type: Differential Pair (Non-coplanar)
+- Signal layer: L1
+- Reference layer: L2
+- D+/D− trace width: 11.44 mil (0.2906 mm)
+- D+/D− edge-to-edge gap: 8 mil (0.2032 mm)
+- Impedance tolerance: Use JLCPCB-supported controlled-impedance tolerance
+
+L1-to-L2 construction:
+- L1 copper thickness: 0.0350 mm
+- First 3313 prepreg thickness: 0.1070 mm
+- Second 3313 prepreg thickness: 0.0994 mm
+- Total L1-to-L2 dielectric thickness: 0.2064 mm
+- L2 copper thickness: 0.0152 mm
+
+Manufacturing requirements:
+- Enable controlled impedance when ordering.
+- Select the JLC04161H-3313A stack-up.
+- Identify the D+/D− pair as a 90 Ω differential-impedance pair.
+- Do not substitute another stack-up without recalculating the trace geometry.
+
+Design notes:
+- Route D+ and D− on L1 above an uninterrupted L2 ground plane.
+- Maintain the specified width and spacing throughout the pair where practical.
+- Avoid plane gaps, unnecessary vias, branches and long test-point stubs.
+- Recalculate the geometry if the manufacturer, stack-up, copper weight,
+  layer assignment or board thickness changes.
+
+2. Create a simple rectangular Revision 1 outline. Keep it only as large as necessary for:
+
+USB Type-A male connector
+USB Type-A female connector
+Base-board connector J3
+Protection and link components
+VBUS/GND probe access
+Mounting or retention features
+
+Check connector overhangs in the footprint courtyard and 3D viewer. USB shells must reach the board edge properly, and the male connector must have enough clearance to enter a computer or extension cable.
+
+Place them in this order:
+
+USB male and female connectors
+D+/D− ESD array beside the exposed female connector
+D+/D− 0 Ω links
+Small optional probe pads
+VBUS protection and measurement parts
+Base-board connector J3
+Mounting holes and labels
+
+Aim for a direct physical corridor:
+
+USB male ───────── D+/D− path ── ESD ── USB female
+
+Keep J3 and slow fault-control lines outside that corridor. Do not force the USB pair through J3—the main D+/D− path should remain local to the interface module, with only control or measurement provisions going to the base board.
+
+
+Placement rules:
+
+ESD array extremely close to the female connector
+No long branch before the ESD device
+D+ and D− components aligned symmetrically
+Minimal rotation changes
+Enough space to route the pair without vias
+Continuous L2 ground beneath the entire path
+VBUS/GND test points accessible at the board edge
+No mounting holes or plane cutouts beneath the pair
+
+
+3. Configure KiCad rules and inspect
+
+Create a USB differential-pair net class for D+ and D−. Enter the preliminary width and gap obtained from your chosen stack-up, but mark them as provisional until verified by the fabricator.
+
+Configure:
+
+Differential-pair width and gap
+Copper clearance
+Via dimensions
+Board-edge clearance
+Differential-pair skew constraint
+Appropriate minimum drill sizes
+
+Update the PCB from the schematic, inspect the unrouted ratsnest and use the 3D viewer to check connector orientation and mechanical interference.
+
+Do not route D+/D− today unless the placement is clearly settled.
+
+
