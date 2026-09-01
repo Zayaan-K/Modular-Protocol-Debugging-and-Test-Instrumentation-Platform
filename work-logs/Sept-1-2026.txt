@@ -1,0 +1,74 @@
+Route the high-priority USB path and establish its uninterrupted ground reference. Do not route the entire board yet.
+
+1. Placement readiness check
+
+Confirm before routing:
+
+Connector orientation and pad numbering match the datasheets.
+The ESD array is immediately beside the USB female connector.
+D+ and D− components are placed symmetrically.
+The selected stack-up and provisional 90 Ω geometry are documented.
+The route can remain on one layer without vias.
+No mounting holes, plane cutouts or other traces obstruct the pair.
+
+
+
+2.  Review how KiCad routes differential pairs and how your fabricator specifies controlled impedance. 
+
+Differential width versus pair spacing
+Keeping the same reference plane throughout the route
+Why a ground-plane break disrupts the return-current path
+Differential-pair skew and when length tuning is necessary
+Clearance around connector pads and the ESD footprint
+Whether your fabricator wants impedance-controlled nets identified in fabrication notes
+
+
+3. Route D+ and D−
+
+Route the pair using KiCad’s differential-pair router:
+
+USB male → ESD array  → 0 Ω links → USB female
+
+Follow these rules:
+
+Remain on the top layer.
+Use no vias unless physically unavoidable.
+Keep width and spacing constant.
+Use gentle 45° bends.
+Keep both traces coupled for nearly the entire path.
+Do not add branches to J3 or remote test points.
+Keep any probe pads small, symmetric and directly in the route.
+Avoid excessive length tuning; a short, direct pair is preferable to unnecessary meanders.
+Allow only the unavoidable uncoupled regions at connector, resistor and ESD pads.
+
+If the ESD package forces severe neck-down or crossed routing, reconsider its orientation or footprint.
+
+4. Create and inspect the ground plane 
+
+Add a solid ground zone on the layer directly beneath the USB pair—ideally L2 in the four-layer stack-up.
+
+Inspect the entire route and verify:
+
+Ground exists continuously beneath both traces.
+There are no plane splits, keepouts or cutouts beneath the pair.
+No unrelated signal crosses through its return-path region.
+ESD ground connects to the plane with a very short path and nearby ground via arrangement.
+Connector shield treatment matches your documented strategy.
+USB signal ground remains continuous between connectors.
+
+
+5. Run physical checks and document 
+
+Run KiCad’s Design Rules Checker, then inspect the pair manually.
+
+Document:
+
+Total approximate pair length
+Reported D+/D− length difference
+Routing width and gap
+Reference plane
+Number of vias
+Any unavoidable neck-down sections
+Whether the geometry still needs fabricator confirmation
+
+Use the 3D viewer once more to check connector alignment and exposed test-point access.

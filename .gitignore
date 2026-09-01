@@ -101,3 +101,5 @@ desktop.ini
 .env
 .env.*
 !.env.example
+
+.history/
