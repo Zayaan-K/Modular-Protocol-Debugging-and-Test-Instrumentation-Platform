@@ -1,0 +1,5 @@
+(version 1)
+
+(rule "USB2 differential skew"
+    (condition "A.hasNetclass('USB_HS')")
+    (constraint skew (max 0.5mm)))
